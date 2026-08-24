@@ -1,21 +1,35 @@
-# Next.js template
+# UserList from randomuser.me
 
-This is a Next.js template with shadcn/ui.
+My approach to the applicant test. This project was created using `shadcn init` and is a basic Next.js starter project.
 
-## Adding components
+### Setup
 
-To add components to your app, run the following command:
+Install dependencies:
 
-```bash
-npx shadcn@latest add button
-```
+> npm install
 
-This will place the ui components in the `components` directory.
+Run the project locally:
 
-## Using components
+> npm run dev
 
-To use the components in your app, import them as follows:
+Run the tests:
 
-```tsx
-import { Button } from "@/components/ui/button";
-```
+> npm run test:run
+
+or, for interactive mode:
+
+> npm run test
+
+### Offline caching
+
+Pages are cached in IndexedDB via Dexie. A "Go Offline" button in the app simulates offline mode. Alternatively, use the browser's devtools offline mode. Any API error triggers offline mode; it's retried when the page changes.
+
+### Limitations
+
+`RESULTS_PER_PAGE` is fixed (default 12, in `constants.ts`), which lets us cache whole pages — but a fixed-size cache doesn't allow an adjustable page size. Search and filtering can't be cleanly implemented under a fixed-window cache, so they're not included.
+
+### Further work
+
+- Client-side paging, caching users by UUID instead of by page
+- Search and sort
+- E2E tests (Cypress or Playwright)
