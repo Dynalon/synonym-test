@@ -51,7 +51,11 @@ export function UserList() {
         <InfinitePagination />
       </div>
       {loading && (
-        <div className="flex w-full justify-center p-8">
+        <div
+          role="status"
+          aria-label="Loading users"
+          className="flex w-full justify-center p-8"
+        >
           <Loader2 className="size-8 animate-spin" />
         </div>
       )}
