@@ -7,10 +7,16 @@ import { useUserStore } from "../store"
 import { InfinitePagination, usePaginationStore } from "./pagination"
 import { UserCard } from "./user-card"
 import { db } from "../cache"
+import { useLiveQuery } from "dexie-react-hooks"
 
 export function UserList() {
-  const { users, setUsers, setLoading, setError } = useUserStore()
+  const { setLoading, setError, error, loading } = useUserStore()
   const { page } = usePaginationStore()
+
+  const cachedResponse = useLiveQuery(() => db.responses.get(page), [page])
+  const users = cachedResponse?.results ?? []
+
+  const offline = error && !loading && users.length === 0
 
   useEffect(() => {
     let cancelled = false
@@ -24,7 +30,6 @@ export function UserList() {
         await db.responses.put({ ...response, page: response.info.page })
 
         if (cancelled) return
-        setUsers(response.results)
       } catch {
         if (!cancelled) setError(true)
       } finally {
@@ -49,6 +54,11 @@ export function UserList() {
           <UserCard key={user.login.uuid} user={user} />
         ))}
       </div>
+      {offline && (
+        <div className="text-md w-full bg-destructive/10 p-2 text-destructive">
+          Page {page} not in cache and API unreachable
+        </div>
+      )}
     </>
   )
 }
