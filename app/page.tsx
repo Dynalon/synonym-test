@@ -1,4 +1,4 @@
-import { UsersView } from "./usersview"
+import { UserList } from "./components/user-list"
 
 export default function Page() {
   return (
@@ -8,7 +8,7 @@ export default function Page() {
           <h1 className="text-3xl leading-10 font-semibold tracking-tight text-black dark:text-zinc-50">
             Users
           </h1>
-          <UsersView />
+          <UserList />
         </div>
       </main>
     </div>
