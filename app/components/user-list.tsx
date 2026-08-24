@@ -1,6 +1,7 @@
 "use client"
 
 import { RESULTS_PER_PAGE } from "@/constants"
+import { Loader2 } from "lucide-react"
 import { useEffect } from "react"
 import { fetchUsers } from "../restApi"
 import { useUserStore } from "../store"
@@ -49,11 +50,18 @@ export function UserList() {
       <div className="flex w-full justify-center">
         <InfinitePagination />
       </div>
-      <div className="grid w-full grid-cols-3 gap-3">
-        {users.map((user) => (
-          <UserCard key={user.login.uuid} user={user} />
-        ))}
-      </div>
+      {loading && (
+        <div className="flex w-full justify-center p-8">
+          <Loader2 className="size-8 animate-spin" />
+        </div>
+      )}
+      {!loading && (
+        <div className="grid w-full grid-cols-3 gap-3">
+          {users.map((user) => (
+            <UserCard key={user.login.uuid} user={user} />
+          ))}
+        </div>
+      )}
       {!loading && offline && pageNotInCache && (
         <div className="text-md w-full bg-destructive/10 p-2 text-destructive">
           Page {page} not in cache and API unreachable
