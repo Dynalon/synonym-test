@@ -26,10 +26,14 @@ Pages are cached in IndexedDB via Dexie. A "Go Offline" button in the app simula
 
 ### Limitations
 
-`RESULTS_PER_PAGE` is fixed (default 12, in `constants.ts`), which lets us cache whole pages — but a fixed-size cache doesn't allow an adjustable page size. Search and filtering can't be cleanly implemented under a fixed-window cache, so they're not included.
+Due to time constraints, following limitations apply:
+
+- Favorites is not implemented
+- `RESULTS_PER_PAGE` is fixed (default 12, in `constants.ts`), which lets us cache whole pages — but a fixed-size cache doesn't allow an adjustable page size. Search and filtering can't be cleanly implemented under a fixed-window cache, so they're not included.
 
 ### Further work
 
+- Implement local-first favorites list
 - Client-side paging, caching users by UUID instead of by page
 - Search and sort
 - E2E tests (Cypress or Playwright)
