@@ -22,7 +22,7 @@ export function DarkModeToggleButton() {
       className="gap-2"
     >
       {isDark ? <Sun className={iconClass} /> : <Moon className={iconClass} />}
-      <span>{label}</span>
+      <span className="hidden sm:inline">{label}</span>
     </Button>
   )
 }

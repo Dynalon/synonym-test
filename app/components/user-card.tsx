@@ -16,10 +16,10 @@ export function UserCard({ user }: { user: User }) {
           <AvatarImage src={user.picture.thumbnail} alt={fullName} />
           <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
-        <div className="flex flex-col leading-tight">
-          <span className="text-sm font-medium">{fullName}</span>
-          <span className="text-xs text-muted-foreground">{user.email}</span>
-          <span className="text-xs text-muted-foreground">
+        <div className="flex min-w-0 flex-col leading-tight">
+          <span className="truncate text-sm font-medium">{fullName}</span>
+          <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+          <span className="truncate text-xs text-muted-foreground">
             {user.location.city}, {user.location.state}
           </span>
         </div>

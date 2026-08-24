@@ -19,7 +19,7 @@ export function OfflineToggleButton() {
       ) : (
         <Unplug className={iconClass} />
       )}
-      <span>{offline ? "Go back online" : "Go offline"}</span>
+      <span className="hidden sm:inline">{offline ? "Go back online" : "Go offline"}</span>
     </Button>
   )
 }

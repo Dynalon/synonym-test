@@ -52,7 +52,7 @@ export function InfinitePagination() {
           />
         </PaginationItem>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-0.5 sm:gap-1">
           {showLeftEllipsis && (
             <PaginationItem>
               <PaginationEllipsis />
