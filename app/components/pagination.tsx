@@ -14,22 +14,18 @@ import { create } from "zustand"
 
 interface PaginationState {
   page: number
-  hasNext: boolean
   nextPage: () => void
   prevPage: () => void
   setPage: (page: number) => void
-  setHasNext: (val: boolean) => void
   reset: () => void
 }
 
 export const usePaginationStore = create<PaginationState>((set) => ({
   page: 1,
-  hasNext: true,
   nextPage: () => set((state) => ({ page: state.page + 1 })),
   prevPage: () => set((state) => ({ page: Math.max(1, state.page - 1) })),
   setPage: (page) => set({ page: Math.max(1, page) }),
-  setHasNext: (val) => set({ hasNext: val }),
-  reset: () => set({ page: 1, hasNext: true }),
+  reset: () => set({ page: 1 }),
 }))
 const WINDOW_SIZE = 5
 
@@ -40,12 +36,10 @@ function getVisiblePages(page: number, windowSize: number): number[] {
 }
 
 export function InfinitePagination() {
-  const { page, nextPage, prevPage, hasNext, setPage } = usePaginationStore()
+  const { page, nextPage, prevPage, setPage } = usePaginationStore()
 
   const visiblePages = getVisiblePages(page, WINDOW_SIZE)
   const showLeftEllipsis = visiblePages[0] > 1
-  const lastVisible = visiblePages[visiblePages.length - 1]
-  const showRightEllipsis = hasNext || lastVisible > page
 
   return (
     <Pagination>
@@ -73,19 +67,13 @@ export function InfinitePagination() {
             </PaginationItem>
           ))}
 
-          {showRightEllipsis && (
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-          )}
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
         </div>
 
         <PaginationItem>
-          <PaginationNext
-            aria-disabled={!hasNext}
-            className={!hasNext ? "pointer-events-none opacity-50" : ""}
-            onClick={() => hasNext && nextPage()}
-          />
+          <PaginationNext onClick={() => nextPage()} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
