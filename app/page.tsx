@@ -1,19 +1,16 @@
-import { Button } from "@/components/ui/button"
+import { UsersView } from "./usersview"
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
+    <div className="flex flex-1 flex-col items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <main className="items-top justify-left flex w-full max-w-300 flex-col bg-white px-16 py-32">
+        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
+          <h1 className="text-3xl leading-10 font-semibold tracking-tight text-black dark:text-zinc-50">
+            Users
+          </h1>
+          <UsersView />
         </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
+      </main>
     </div>
   )
 }
