@@ -5,13 +5,18 @@ export async function fetchUsers(page: number, results: number) {
   url.searchParams.set("page", page.toString())
   url.searchParams.set("results", results.toString())
 
-  const response = await fetch(url.toString())
-
-  // to detect offlinenes
-  if (!response.ok) {
-    throw new Error("failure to receive users")
+  let response: Response
+  try {
+    response = await fetch(url.toString())
+  } catch {
+    // fetch throws on network failure (offline, DNS, CORS, etc.)
+    // per spec, treat any request failure as "offline"
+    throw new Error("offline")
   }
 
-  const body = (await response.json()) as UserResponse
-  return body
+  if (!response.ok) {
+    throw new Error("offline")
+  }
+
+  return (await response.json()) as UserResponse
 }
