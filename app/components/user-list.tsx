@@ -10,15 +10,15 @@ import { db } from "../cache"
 import { useLiveQuery } from "dexie-react-hooks"
 
 export function UserList() {
-  const { setLoading, setError, error, loading } = useUserStore()
+  const { setLoading, setError, offline, loading } = useUserStore()
   const { page } = usePaginationStore()
 
   const cachedResponse = useLiveQuery(() => db.responses.get(page), [page])
   const users = cachedResponse?.results ?? []
-
-  const offline = error && !loading && users.length === 0
+  const pageNotInCache = !cachedResponse
 
   useEffect(() => {
+    if (offline) return
     let cancelled = false
 
     async function loadUsers() {
@@ -42,7 +42,7 @@ export function UserList() {
     return () => {
       cancelled = true
     }
-  }, [page])
+  }, [page, offline, setError, setLoading])
 
   return (
     <>
@@ -54,7 +54,7 @@ export function UserList() {
           <UserCard key={user.login.uuid} user={user} />
         ))}
       </div>
-      {offline && (
+      {!loading && offline && pageNotInCache && (
         <div className="text-md w-full bg-destructive/10 p-2 text-destructive">
           Page {page} not in cache and API unreachable
         </div>
